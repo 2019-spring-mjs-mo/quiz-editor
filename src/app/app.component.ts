@@ -3,7 +3,6 @@ import { QuizService } from './quiz.service';
 
 interface QuizDisplay {
   name: string;
-  numberOfQuestions: number;
   questions: QuestionDisplay[]
 }
 
@@ -35,7 +34,6 @@ export class AppComponent implements OnInit {
     // Create the new quiz.
     const newQuiz: QuizDisplay = {
       name: "New Untitled Quiz"
-      , numberOfQuestions: 0
       , questions: []
     };
 
