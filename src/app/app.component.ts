@@ -53,6 +53,15 @@ export class AppComponent implements OnInit {
     this.selectedQuiz.questions = this.selectedQuiz.questions.filter(x => x !== questionToRemove);
   }
 
+  addNewQuestion() {
+    this.selectedQuiz.questions = [
+      ...this.selectedQuiz.questions
+      , {
+        name: "New Blank Question"
+      }
+    ];
+  }
+
   serviceDown = false;
 
   ngOnInit() {
