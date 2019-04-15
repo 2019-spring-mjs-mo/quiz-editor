@@ -32,9 +32,9 @@
           {{ q.name }}
           <span 
             class="badge badge-secondary"
-            [class.bg-danger]="q.numberOfQuestions === 0"
+            [class.bg-danger]="q.length === 0"
           >
-            {{ q.numberOfQuestions }}
+            {{ q.length }}
           </span>
         </a>
       </div>
@@ -70,7 +70,8 @@
           Questions
         </div>
         <div class="card-body">
-          Coming soon!
+          <button class="btn btn-outline-primary">Add New Question</button>
+          
         </div>
       </div>
       <br>
