@@ -20,9 +20,7 @@
         >
           Add New Quiz
       </button>
-      <br />
-      <br />
-      <div class="list-group">
+      <div class="list-group mt-4">
         <a
           [class.active] = "q === selectedQuiz"
           (click)="selectQuiz(q)" 
@@ -48,9 +46,7 @@
       <br />
       <button class="btn btn-outline-success">Save</button>
       <button class="btn btn-link">Cancel</button>
-      <br />
-      <br />
-      <div class="card">  
+      <div class="card mt-4">  
         <div class="card-header">
           General
         </div>
@@ -61,33 +57,26 @@
             class="form-control">
         </div>
       </div>
-      <br />
-      <div class="card">
+      <div class="card mt-4">
         <div class="card-header">
           Questions
         </div>
         <div class="card-body">
           <button (click)="addNewQuestion()" class="btn btn-outline-primary">Add New Question</button>
-          <br />
-          <br />
-          <div  class="row" *ngFor="let q of selectedQuiz.questions">
-            <br />
-            <div class="col-md-9">
+          <div  class="row mt-4" *ngFor="let q of selectedQuiz.questions">
+            <div class="col-md-9 mt-2">
                 <input
                   type="text" 
                   [(ngModel)]="q.name"
                   class="form-control">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 mt-2">
               <button class="btn btn-outline-danger" (click)="deleteQuestion(q)">Remove</button>
             </div>
-            <br />
-            <br />
           </div>
         </div>
       </div>
-      <br />
-      <div class="card">
+      <div class="card mt-4">
         <div class="card-header">
           Other
         </div>
