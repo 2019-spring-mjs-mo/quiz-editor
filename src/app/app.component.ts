@@ -4,6 +4,7 @@ import { QuizService } from './quiz.service';
 interface QuizDisplay {
   name: string;
   numberOfQuestions: number;
+  questions?: [];
 }
 
 @Component({
@@ -56,6 +57,7 @@ export class AppComponent implements OnInit {
         this.quizzes = (<any[]> data).map(x => ({ 
           name: x.name
           , numberOfQuestions: x.numberQuestions
+          , questions: x.questions
         }));
       }
       , (error) => {
@@ -66,6 +68,7 @@ export class AppComponent implements OnInit {
 
   };
 
+  toughestQuestion = "Choose the toughest question...";
   title = 'quiz-editor';
   myWidth = 250;
 
