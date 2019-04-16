@@ -147,7 +147,9 @@ export class AppComponent implements OnInit {
       // const results = await Promise.all([n1, n2]);
       const results = await Promise.race([n1, n2]);
       console.log(results);
-    } catch(error) {
+    } 
+    
+    catch(error) {
       console.log(error)
     }
   }
