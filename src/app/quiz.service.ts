@@ -4,13 +4,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
-@NgbModule({
-  
-  imports: [NgbModule, ...],
-  
-})
-
-
 @Injectable({
   providedIn: 'root'
 })
