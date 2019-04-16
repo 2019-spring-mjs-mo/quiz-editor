@@ -3,7 +3,7 @@ import { QuizService } from './quiz.service';
 
 interface QuizDisplay {
   name: string;
-  questions: Questiondisplay[];
+  questions: QuestionDisplay[];
 }
 
 
@@ -94,4 +94,40 @@ export class AppComponent implements OnInit {
   get titleColor() {
     return this.myWidth > 400 ? "red" : "blue";
   }
+
+  promisesOne() {
+    const n = this.qSvc.getNumberPromise(true);
+    console.log(n);
+    
+    n.then(
+      n => console.log(n)
+      
+    ).catch(
+      error => console.log(error)
+      
+    );
+  }
+
+  async promiseTwo() {
+    try {
+      const n1 = await this.qSvc.getNumberPromise(true);
+      console.log(n1);
+      
+
+    }
+ 
+    catch(error) {
+      console.log("catch me");
+      
+      console.log(error);
+      
+    }
+  }
+
+  promiseThree() {
+    const n1 = this.qSvc.getNumberPromise(true);
+    console.log(n1);
+    
+  }
+
 }
