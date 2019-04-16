@@ -1,5 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+
+
+@NgbModule({
+  
+  imports: [NgbModule, ...],
+  
+})
+
 
 @Injectable({
   providedIn: 'root'
