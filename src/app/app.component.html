@@ -20,6 +20,9 @@
         >
           Add New Quiz
       </button>
+      <button class="btn btn-sm btn-link" (click)="promiseOne()"> Js promises</button>
+      <button class="btn btn-sm btn-link" (click)="promiseTwo()"> Js promises 2</button>
+      <button class="btn btn-sm btn-link" (click)="promiseThree()"> Js promises 3</button>
       <br>
       <br>
       <div class="list-group">
@@ -71,8 +74,8 @@
         </div>
         <div class="card-body">
           <button 
-          class="btn btn-outline-primary"
-          (click)="addNewQuestion(question)">
+            class="btn btn-outline-primary"
+            (click)="addNewQuestion(question)">
             Add New Question!
           </button> <br><br>
           <div class="row" *ngFor="let question of selectedQuiz.questions"> 
