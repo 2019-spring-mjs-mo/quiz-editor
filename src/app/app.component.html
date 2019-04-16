@@ -20,6 +20,9 @@
         >
           Add New Quiz
       </button>
+      <button class="btn sm link">JS Promises 1</button>
+          <button class="btn sm link">2</button>
+          <button class="btn sm link">3</button>
       <br>
       <br>
       <div class="list-group">
@@ -45,6 +48,7 @@
         <div class="card-body">
           Select or add a new quiz...
         </div>
+        
       </div>
     </div>
     <div class="col-md-8" *ngIf="selectedQuiz">
@@ -76,6 +80,7 @@
           >
             Add New Question
           </button>
+          
           <br>
           <br>
           <div class="row" *ngFor="let question of selectedQuiz.questions">
