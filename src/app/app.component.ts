@@ -90,4 +90,65 @@ export class AppComponent implements OnInit {
       }
     );
   }
+
+  promisesOne = () => {
+    const n = this.qSvc.getNumberPromise(true);
+    console.log(n);
+    n.then(
+      number => {
+        console.log(".then");
+        console.log(number);
+
+        const anotherNumberPromise = this.qSvc.getNumberPromise(false);
+        console.log(anotherNumberPromise);
+        anotherNumberPromise.then(
+          number => console.log(number)
+        ).catch(
+          error => console.log(error)
+        );
+      }
+    ).catch(
+      error => {
+        console.log(".catch");
+        console.log(error);
+      }
+    );
+  }
+
+  // using more modern async await with promise instead of .then & .catch
+  async promisesTwo() {
+    try {
+      const n1 = await this.qSvc.getNumberPromise(true);
+      console.log(n1);
+      const n2 = await this.qSvc.getNumberPromise(false);
+      console.log(n2); // won't reach this line
+    } 
+    catch(error) {
+      console.log("catch block");
+      console.log(error);
+    }
+  }
+
+  async promisesThree() {
+    // parlor trick for concurrent promise execution
+    try {
+      const np1 = this.qSvc.getNumberPromise(true);
+      console.log(np1);
+
+      const np2 = this.qSvc.getNumberPromise(true);
+      console.log(np2); // won't reach this line
+      
+      // make concurrent calls and wait for response from both
+      const results = await Promise.all([np1, np2]);
+      
+      // make calls and wait for the first response; set it to results
+      // const results = await Promise.race([np1, np2]);
+      
+      // won't reach this line if either call responds with error
+      console.log(results); 
+    }
+    catch(error) {
+      console.log(error);
+    }
+  }
 }
