@@ -94,4 +94,39 @@ export class AppComponent implements OnInit {
   get titleColor() {
     return this.myWidth > 400 ? "red" : "blue";
   }
+
+  promisesOne() {
+    const n = this.qSvc.getNumberPromise(false);
+    console.log(n);
+    n.then(n => console.log(n)).catch(error => console.log(error));
+  }
+
+  async promiseTwo() {
+    
+    try {
+      const n1 = await this.qSvc.getNumberPromise(true);
+      console.log(n1);
+
+      const n2 = await this.qSvc.getNumberPromise(false);
+      console.log(n2);
+    }
+
+    catch(error) {
+      console.log(error)
+    }
+  }
+
+  promiseThree() {
+    try {
+      const n1 = this.qSvc.getNumberPromise(true);
+      console.log(n1);
+  
+      const n2 = this.qSvc.getNumberPromise(false);
+      console.log(n2);
+    }
+    catch(error) {
+      console.log(error);
+    }
+   
+  }
 }
