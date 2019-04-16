@@ -3,19 +3,18 @@ import { QuizService } from './quiz.service';
 
 interface QuizDisplay {
   name: string;
-  questions: QuestionDisplay[];
+  questions: QuestionDisplay[]
 }
-
 
 interface QuestionDisplay {
   name: string;
 }
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent implements OnInit {
 
   constructor(private qSvc: QuizService) {
@@ -51,12 +50,14 @@ export class AppComponent implements OnInit {
   }
 
   removeQuestion(questionToRemove) {
-    this.selectedQuiz.questions = this.selectedQuiz.questions.filter(x => x !== questionToRemove);
+    this.selectedQuiz.questions = this.selectedQuiz.questions
+      .filter(x => x !== questionToRemove);
   }
-
+  
   addNewQuestion() {
     this.selectedQuiz.questions = [
-      ...this.selectedQuiz.questions, {
+      ...this.selectedQuiz.questions
+      , {
         name: "New Untitled Question"
       }
     ];
@@ -72,7 +73,7 @@ export class AppComponent implements OnInit {
 
         this.quizzes = (<any[]> data).map(x => ({ 
           name: x.name
-          , questions: x.numbersQuestions
+          , questions: x.questions
         }));
       }
       , (error) => {
@@ -97,37 +98,71 @@ export class AppComponent implements OnInit {
 
   promisesOne() {
     const n = this.qSvc.getNumberPromise(true);
-    console.log(n);
-    
+    console.log(n); // ???
+
     n.then(
-      n => console.log(n)
-      
+      number => {
+        console.log(".then");
+        console.log(number); // ???
+
+        const anotherNumberPromise = this.qSvc.getNumberPromise(false);
+        console.log(anotherNumberPromise); // ??? // ZoneAwarePromise
+
+        anotherNumberPromise.then(
+          number => console.log(number)
+        ).catch(
+          error => console.log(error)
+        );
+
+      }
     ).catch(
-      error => console.log(error)
-      
+      error => {
+        console.log(".catch")
+        console.log(error) 
+      }
     );
   }
 
   async promiseTwo() {
+
     try {
       const n1 = await this.qSvc.getNumberPromise(true);
-      console.log(n1);
-      
+      console.log(n1); // ??? // 42
 
+      const n2 = await this.qSvc.getNumberPromise(false);
+      console.log(n2);
     }
- 
+
     catch(error) {
-      console.log("catch me");
-      
+      console.log("catch block");
       console.log(error);
-      
     }
   }
 
-  promiseThree() {
-    const n1 = this.qSvc.getNumberPromise(true);
-    console.log(n1);
-    
+  async promiseThree() {
+    // Parlor trick for concurrent promise execution...
+
+    try {
+      const n1 = this.qSvc.getNumberPromise(true);
+      console.log(n1); // ???
+
+      const n2 = this.qSvc.getNumberPromise(true);
+      console.log(n2); // ???
+
+      const results = await Promise.all([n1, n2]);
+      //const results = await Promise.race([n1, n2]);
+      console.log(results);
+    }
+    catch(error) {
+      console.log(error);
+    }
   }
 
+  /*async*/ testAsyncKeyword() {
+
+    // await is a valid variable name...
+    // unless it is an async method ! ! !
+    //let await = 0;
+
+  }
 }
