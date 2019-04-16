@@ -3,7 +3,12 @@ import { QuizService } from './quiz.service';
 
 interface QuizDisplay {
   name: string;
-  numberOfQuestions: number;
+  questions: QuestionDisplay[]
+}
+
+interface QuestionDisplay {
+  name: string;
+  
 }
 
 @Component({
@@ -11,6 +16,7 @@ interface QuizDisplay {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit {
 
   constructor(private qSvc: QuizService) {
@@ -21,16 +27,20 @@ export class AppComponent implements OnInit {
   quizzes: QuizDisplay[] = [];
   selectedQuiz: QuizDisplay = undefined;
 
+
+
   selectQuiz(q: QuizDisplay) {
     this.selectedQuiz = q;
   }
+
+
 
   addNewQuiz() {
 
     // Create the new quiz.
     const newQuiz: QuizDisplay = {
-      name: "Untitled Quiz"
-      , numberOfQuestions: 0
+      name: "undefined quiz"
+      , questions: []
     };
 
     // Create a new quiz list with the new quiz...
@@ -47,6 +57,20 @@ export class AppComponent implements OnInit {
 
   serviceDown = false;
 
+
+  removeQuestion(questionToRemove) {
+    this.selectedQuiz.questions = this.selectedQuiz.questions
+    .filter(x=> x !== questionToRemove);
+  }
+
+  addNewQuestion() {
+    this.selectedQuiz.questions = [
+    ...this.selectedQuiz.questions, {name: "untitled questions"}
+    ]
+  }
+
+
+
   ngOnInit() {
 
     this.qSvc.getQuizzes().subscribe(
@@ -55,14 +79,20 @@ export class AppComponent implements OnInit {
 
         this.quizzes = (<any[]> data).map(x => ({ 
           name: x.name
-          , numberOfQuestions: x.numberQuestions
+          , questions: x.questions
         }));
+
+
       }
       , (error) => {
         console.log(error);
         this.serviceDown = true;
       }
     );
+
+
+
+    
 
   };
 
@@ -77,4 +107,93 @@ export class AppComponent implements OnInit {
   get titleColor() {
     return this.myWidth > 400 ? "red" : "blue";
   }
+
+
+  promisesOne() {
+    const n = this.qSvc.getNumberPromise(true);
+    console.log(n);
+    n.then(
+      number => {
+      console.log(".then")
+      console.log(number)
+
+
+      const anotherNumberPromise = this.qSvc.getNumberPromise(false)
+      console.log(anotherNumberPromise);
+
+      anotherNumberPromise.then(
+        number=> console.log(number)
+      ).catch(
+        error=>console.log(error)
+      );
+
+      }
+      ).catch(
+      error=>{
+        console.log("catch")
+        console.log(error)
+      }
+    );
+  }
+
+
+
+  async promiseTwo() {
+
+    try{
+      const n1 = await this.qSvc.getNumberPromise(true);
+      console.log(n1);//42 - for true, 
+      const n2 =await this.qSvc.getNumberPromise(false);
+      console.log(n2);
+
+    }
+
+    catch(error) {
+      console.log("catch block");
+      console.log(error);
+    }
+
+  }
+
+  async promiseThree() {
+    //parlor trick for concurrent promise execution
+
+    const n1 =this.qSvc.getNumberPromise(true);
+    console.log(n1);
+
+
+
+    try{
+      const n1 = this.qSvc.getNumberPromise(true);
+      console.log(n1);//42 - for true, 
+
+      const n2 = this.qSvc.getNumberPromise(true);
+      console.log(n2);
+
+      //const results = await Promise.all([n1,n2]);
+      const results = await Promise.race([n1,n2]);
+      console.log(results);
+
+
+      
+    }
+
+    catch(error) {
+      console.log(error);
+    }
+
+
+
+
+
+  }
+
+  // async testAsyncKeyword() {
+
+  // await is a valid varibale name
+  //   let await = 0;
+  // }
+
+
+
 }

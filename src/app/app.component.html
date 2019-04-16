@@ -20,6 +20,12 @@
         >
           Add New Quiz
       </button>
+
+      <button class="btn btn-sm btn-link" (click)="promisesOne()">js promise 1</button>
+      <button class="btn btn-sm btn-link" (click)="promiseTwo()">2</button>
+      <button class="btn btn-sm btn-link" (click)="promiseThree()">3</button> 
+
+
       <br>
       <br>
       <div class="list-group">
@@ -32,12 +38,15 @@
           {{ q.name }}
           <span 
             class="badge badge-secondary"
-            [class.bg-danger]="q.numberOfQuestions === 0"
+            [class.bg-danger]="q.questions.length === 0"
           >
-            {{ q.numberOfQuestions }}
+            {{ q.questions.length }}
           </span>
         </a>
+
       </div>
+
+
     </div>
     <div class="col-md-8" *ngIf="!selectedQuiz">
       <br>
@@ -47,12 +56,17 @@
         </div>
       </div>
     </div>
+
+
+
     <div class="col-md-8" *ngIf="selectedQuiz">
       <br>
       <button class="btn btn-outline-success">Save</button>
       <button class="btn btn-link">Cancel</button>
       <br>
       <br>
+
+
       <div class="card">  
         <div class="card-header">
           General
@@ -64,14 +78,45 @@
             class="form-control">
         </div>
       </div>
+
+
+
       <br>
       <div class="card">
         <div class="card-header">
           Questions
         </div>
         <div class="card-body">
-          Coming soon!
+
+          <button 
+          class="btn btn-outline-danger"
+          (click) = "addNewQuestion()"
+          > 
+            add new stuff
+          </button>
+          <br ><br >
+          
+
+          <div class="row" *ngFor="let question of selectedQuiz.questions">
+
+            <div class="col-md-9">
+              <input 
+              type="text" 
+              [(ngModel)] = "question.name">
+            </div>
+
+            <div class="col-md-3">
+              <button 
+              class="btn btn-link text-danger"
+              (click) = "removeQuestion(question)"
+              >
+              remove
+            </button>
+            </div>
+
+          </div>
         </div>
+
       </div>
       <br>
       <div class="card">
