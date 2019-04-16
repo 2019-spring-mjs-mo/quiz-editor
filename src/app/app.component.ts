@@ -3,7 +3,11 @@ import { QuizService } from './quiz.service';
 
 interface QuizDisplay {
   name: string;
-  numberOfQuestions: number;
+  // numberOfQuestions: number;
+  questions:QuestionDisplay[];
+}
+interface QuestionDisplay {
+  name:string;
 }
 
 @Component({
@@ -19,6 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   quizzes: QuizDisplay[] = [];
+  questions:QuestionDisplay[] = [];
   selectedQuiz: QuizDisplay = undefined;
 
   selectQuiz(q: QuizDisplay) {
@@ -30,7 +35,7 @@ export class AppComponent implements OnInit {
     // Create the new quiz.
     const newQuiz: QuizDisplay = {
       name: "Untitled Quiz"
-      , numberOfQuestions: 0
+      ,questions:[]
     };
 
     // Create a new quiz list with the new quiz...
@@ -42,7 +47,7 @@ export class AppComponent implements OnInit {
     ];
 
     // Select the newly added quiz.
-    this.selectedQuiz = newQuiz; 
+    // this.selectedQuiz = newQuiz; 
   }
 
   serviceDown = false;
@@ -55,8 +60,10 @@ export class AppComponent implements OnInit {
 
         this.quizzes = (<any[]> data).map(x => ({ 
           name: x.name
-          , numberOfQuestions: x.numberQuestions
+          // , numberOfQuestions: x.numberQuestions
+          ,questions:x.questions
         }));
+        
       }
       , (error) => {
         console.log(error);
@@ -65,6 +72,8 @@ export class AppComponent implements OnInit {
     );
 
   };
+
+  
 
   title = 'quiz-editor';
   myWidth = 250;
@@ -76,5 +85,86 @@ export class AppComponent implements OnInit {
   // Read-only/getter property..
   get titleColor() {
     return this.myWidth > 400 ? "red" : "blue";
+  }
+  
+  addNewQuestion() {
+    
+    // Create the new question.
+    const newQuestion: QuestionDisplay = {
+      name: "New Question" 
+    };
+    this.selectedQuiz.questions = [
+      ...this.selectedQuiz.questions, newQuestion
+    ]
+    
+
+    // Create a new quiz list with the new quiz...
+    //
+    // a.k.a. "Add the new quiz to the list"
+    const questions = this.quizzes.map(x =>
+      x.questions
+    );
+    this.questions =[newQuestion]
+    console.log(this.questions)
+
+  }
+  deleteQuestion(questionToDelete) {
+    this.selectedQuiz.questions = this.selectedQuiz.questions
+    .filter(x => x !== questionToDelete);
+  }
+
+  promiseOne() {
+    const n = this.qSvc.getNumberPromise(true);
+    console.log(n);
+    n.then(n=> {
+      console.log("then")
+      console.log(n);
+      const anaotherNumberPromise = this.qSvc.getNumberPromise(false);
+      console.log(anaotherNumberPromise);
+      anaotherNumberPromise.then(  number =>{
+
+      console.log(number);
+        }
+      ).catch(
+        error=>console.log(error)
+      );
+    })
+    .catch(error=>{
+      console.log("catch")
+      console.log(error)}
+      );
+  }
+  async promiseTwo(){
+    try{
+      const number = await this.qSvc.getNumberPromise(true);
+      console.log(number);
+      const number2 = await this.qSvc.getNumberPromise(false);
+      console.log(number2);
+
+    }catch(error){
+      console.log("Catch Block");
+      console.log(error);
+    }
+    
+  }
+  async promiseThree(){
+    try {
+    const number1 = this.qSvc.getNumberPromise(true)
+    console.log(number1);
+
+    const number2 = this.qSvc.getNumberPromise(false);
+    console.log(number2);
+    const result = await Promise.all([number1, number2]);
+    // const result = await Promise.race([number1, number2]);
+    // const result = await Promise.all([number2, number1]);
+    console.log(result);
+    } catch(error){
+      console.log(error);
+    }
+
+  }
+
+  /* async */ testAsynch (){
+    //await is a valid 
   }
 }

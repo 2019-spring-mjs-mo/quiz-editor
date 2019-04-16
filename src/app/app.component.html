@@ -20,6 +20,12 @@
         >
           Add New Quiz
       </button>
+      <button class="btn btn-sm btn-link"
+      (click) = "promiseOne()">JS Promise 1</button>
+      <button class="btn btn-sm btn-link"
+      (click)="promiseTwo()">2</button>
+      <button class="btn btn-sm btn-link"
+      (click) = "promiseThree()">3</button>
       <br>
       <br>
       <div class="list-group">
@@ -32,9 +38,9 @@
           {{ q.name }}
           <span 
             class="badge badge-secondary"
-            [class.bg-danger]="q.numberOfQuestions === 0"
-          >
-            {{ q.numberOfQuestions }}
+            [class.bg-danger]= "q.questions.length === 0">
+             
+            {{ q.questions.length}}
           </span>
         </a>
       </div>
@@ -70,7 +76,40 @@
           Questions
         </div>
         <div class="card-body">
-          Coming soon!
+            <button 
+            (click)="addNewQuestion()"
+            class="btn btn-outline-primary"
+            >
+            Add New Question
+          </button>
+          
+          <br>
+          <br>
+          <div class="row" *ngFor ="let question of selectedQuiz.questions">
+            <div class="col-md-9">
+              <input type="text" 
+              [(ngModel)] ="question.name"
+              class="form-control"
+              >
+              <br>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-link text-danger"
+              (click) ="deleteQuestion(question)">Delete</button>
+            </div>
+          </div>
+          <!-- <div  *ngFor = "let q of  quizzes let i = index"> -->
+          <!-- <div class="input-group"   
+            *ngFor = "let question of  selectedQuiz.questions let i = index" >
+            <input type="text" 
+            [(ngModel)]="question.name"
+            class="form-control">
+           <div class="input-group-append">
+             <button  (click) ="deleteQuestion(i)" 
+              type="button" class="btn btn-outline-danger" >Delete</button>
+            </div> 
+        </div> -->
+      <!-- </div> -->
         </div>
       </div>
       <br>
