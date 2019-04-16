@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from './quiz.service';
+import { NgbRating } from '@ng-bootstrap/ng-bootstrap';
 
 interface QuizDisplay {
   name: string;
@@ -8,6 +9,7 @@ interface QuizDisplay {
 
 interface QuestionDisplay {
   name: String;
+  rating: number;
 }
 
 @Component({
@@ -59,6 +61,7 @@ export class AppComponent implements OnInit {
       ...this.selectedQuiz.questions
       , {
         name: "New Untitled Question"
+        , rating: 6
       }
     ];
   }
@@ -73,7 +76,7 @@ export class AppComponent implements OnInit {
 
         this.quizzes = (<any[]> data).map(x => ({ 
           name: x.name
-          , questions: x.questions
+          , questions: x.questions.map( x => ({...x, rating:8}))
         }));
       }
       , (error) => {

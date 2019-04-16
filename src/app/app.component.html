@@ -79,21 +79,26 @@
             Add New Question!
           </button> <br><br>
           <div class="row" *ngFor="let question of selectedQuiz.questions"> 
-            <div class="col-md-9">
+            <div class="col-md-4">
               <input 
               type="text" 
               [(ngModel)]="question.name"
               class="form-control"
               />
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
               <button 
               class="btn btn-link text-danger"
               (click)="removeQuestion(question)"
               >
                 Remove
-              </button>
+              </button>        
               <br><br>
+            </div>
+            <div class="class col-md-4">
+              <ngb-rating [(rate)]="question.rating"></ngb-rating>
+              <hr>
+              <pre>Rate: <b>{{question.rating}}</b></pre>
             </div>
           </div>
         </div>
