@@ -3,11 +3,11 @@ import { QuizService } from './quiz.service';
 
 interface QuizDisplay {
   name: string;
-  questions: QuestionDisplay[];
+  questions: QuestionDisplay[]
 }
 
 interface QuestionDisplay {
-  name:string;
+  name: string;
 }
 
 @Component({
@@ -49,11 +49,11 @@ export class AppComponent implements OnInit {
     this.selectedQuiz = newQuiz; 
   }
 
-  removeQuestions(questionToRemove){
-    this.selectedQuiz.questions =
-      this.selectQuiz.questions.filter(x=> x !== questionToRemove);
+  removeQuestion(questionToRemove) {
+    this.selectedQuiz.questions = this.selectedQuiz.questions
+      .filter(x => x !== questionToRemove);
   }
-
+  
   serviceDown = false;
 
   ngOnInit() {
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
 
         this.quizzes = (<any[]> data).map(x => ({ 
           name: x.name
-          , questions: x.numberQuestions
+          , questions: x.questions
         }));
       }
       , (error) => {
