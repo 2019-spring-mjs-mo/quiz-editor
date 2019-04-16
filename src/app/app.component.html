@@ -1,8 +1,7 @@
 <div class="container">
   <div class="row" *ngIf="serviceDown">
     <div class="col-md-12">
-      <br />
-      <div class="card">
+      <div class="card mt-4">
           <div class="card-body">
             <h3>
                 Quiz service down. Please try again later. Sorry : - (
@@ -13,13 +12,16 @@
   </div>
   <div class="row" *ngIf="!serviceDown">
     <div class="col-md-4">
-      <br />
       <button 
         (click)="addNewQuiz()"
-        class="btn btn-outline-primary"
+        class="btn btn-outline-primary mt-4"
         >
           Add New Quiz
       </button>
+      <button class="btn btn-sm btn-link mt-4" (click)="promisesOne()">JS Promise 1</button>
+      <button class="btn btn-sm btn-link mt-4" (click)="promiseTwo()">2</button>
+      <button class="btn btn-sm btn-link mt-4" (click)="promiseThree()">3</button>
+
       <div class="list-group mt-4">
         <a
           [class.active] = "q === selectedQuiz"
@@ -35,17 +37,15 @@
       </div>
     </div>
     <div class="col-md-8" *ngIf="!selectedQuiz">
-      <br />
-      <div class="card">
+      <div class="card mt-4">
         <div class="card-body">
           Select or add a new quiz...
         </div>
       </div>
     </div>
     <div class="col-md-8" *ngIf="selectedQuiz">
-      <br />
-      <button class="btn btn-outline-success">Save</button>
-      <button class="btn btn-link">Cancel</button>
+      <button class="btn btn-outline-success mt-4">Save</button>
+      <button class="btn btn-link mt-4">Cancel</button>
       <div class="card mt-4">  
         <div class="card-header">
           General

@@ -67,6 +67,62 @@ export class AppComponent implements OnInit {
   }
 
 
+  promisesOne() {
+    const n = this.qSvc.getNummberPromise(true);
+    console.log(n);
+
+    n.then(
+      n  => {
+        console.log(".then")
+        console.log(n)
+
+        const anotherNumberPromise = this.qSvc.getNummberPromise(false);
+        console.log(anotherNumberPromise)
+
+        anotherNumberPromise.then(
+          number => console.log(number)
+        ).catch(
+          error => console.log(error)
+        )
+      }
+    ).catch( 
+      error => {
+        console.log(".catch")
+        console.log(error)
+      }
+    );
+  }
+
+  async promiseTwo(){
+    try{
+      const n1 = await this.qSvc.getNummberPromise(true);
+      console.log(n1);
+
+      const n2 = await this.qSvc.getNummberPromise(false);
+      console.log(n1);
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  async promiseThree() {
+    try{
+      const n1 = this.qSvc.getNummberPromise(true);
+      console.log(n1);
+
+      const n2 = this.qSvc.getNummberPromise(true);
+      console.log(n2);
+
+      const results = await Promise.all([n1, n2]);
+      console.log(results)
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+
   serviceDown = false;
 
   ngOnInit() {
