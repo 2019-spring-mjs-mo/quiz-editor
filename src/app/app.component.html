@@ -2,35 +2,28 @@
   <div class="row" *ngIf="serviceDown">
     <div class="col-md-12">
       <div class="card mt-4">
-          <div class="card-body">
-            <h3>
-                Quiz service down. Please try again later. Sorry : - (
-            </h3>
-          </div>
-      </div>      
+        <div class="card-body">
+          <h3>
+            Quiz service down. Please try again later. Sorry : - (
+          </h3>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row" *ngIf="!serviceDown">
     <div class="col-md-4">
-      <button 
-        (click)="addNewQuiz()"
-        class="btn btn-outline-primary mt-4"
-        >
-          Add New Quiz
+      <button (click)="addNewQuiz()" class="btn btn-outline-primary mt-4">
+        Add New Quiz
       </button>
       <button class="btn btn-sm btn-link mt-4" (click)="promisesOne()">JS Promise 1</button>
       <button class="btn btn-sm btn-link mt-4" (click)="promiseTwo()">2</button>
       <button class="btn btn-sm btn-link mt-4" (click)="promiseThree()">3</button>
 
       <div class="list-group mt-4">
-        <a
-          [class.active] = "q === selectedQuiz"
-          (click)="selectQuiz(q)" 
-          href="#"
-          *ngFor="let q of quizzes" 
+        <a [class.active]="q === selectedQuiz" (click)="selectQuiz(q)" href="#" *ngFor="let q of quizzes"
           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
           {{ q.name }}
-          <span class="badge badge-secondary" [class.bg-danger]="q.questions.length === 0" >
+          <span class="badge badge-secondary" [class.bg-danger]="q.questions.length === 0">
             {{ q.questions.length }}
           </span>
         </a>
@@ -46,29 +39,37 @@
     <div class="col-md-8" *ngIf="selectedQuiz">
       <button class="btn btn-outline-success mt-4">Save</button>
       <button class="btn btn-link mt-4">Cancel</button>
-      <div class="card mt-4">  
-        <div class="card-header">
-          General
-        </div>
-        <div class="card-body">
-          <input 
-            type="text" 
-            [(ngModel)]="selectedQuiz.name"
-            class="form-control">
-        </div>
-      </div>
+      <br />
+      <br />
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+        <ngb-panel title="General">
+          <ng-template ngbPanelContent>
+            <input type="text" [(ngModel)]="selectedQuiz.name" class="form-control">
+          </ng-template>
+        </ngb-panel>
+
+        <ngb-panel title="Quiz Description">
+          <ng-template ngbPanelContent>
+              <textarea [(ngModel)]="selectedQuiz.quizDesc" class="form-control" rows="3" placeholder="Enter Quiz Short Description"></textarea>
+            </ng-template>
+        </ngb-panel>
+
+      </ngb-accordion>
+
       <div class="card mt-4">
         <div class="card-header">
           Questions
         </div>
         <div class="card-body">
           <button (click)="addNewQuestion()" class="btn btn-outline-primary">Add New Question</button>
-          <div  class="row mt-4" *ngFor="let q of selectedQuiz.questions">
-            <div class="col-md-9 mt-2">
-                <input
-                  type="text" 
-                  [(ngModel)]="q.name"
-                  class="form-control">
+          <div class="row mt-4" *ngFor="let q of selectedQuiz.questions">
+            <div class="col-md-5 mt-2">
+              <input type="text" [(ngModel)]="q.name" class="form-control">
+            </div>
+            <div class="class col-md-4">
+              <ngb-rating [(rate)]="q.rating"></ngb-rating>
+              <hr>
+              <pre>Rate: <b>{{q.rating}}</b></pre>
             </div>
             <div class="col-md-3 mt-2">
               <button class="btn btn-outline-danger" (click)="deleteQuestion(q)">Remove</button>
@@ -82,6 +83,16 @@
         </div>
         <div class="card-body">
           <button class="btn btn-outline-danger" (click)="deleteQuiz(selectedQuiz)">Delete This Quiz</button>
+          <br />
+
+          <label class="mt-4">Test Date</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="selectedQuiz.testDate"
+              ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

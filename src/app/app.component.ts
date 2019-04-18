@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from './quiz.service';
 
+
 interface QuizDisplay {
-  name: string;
+  name: string
   questions: QuestionDisplay[]
+  testDate: string
+  quizDesc: string
 }
 
 interface QuestionDisplay {
   name: string;
+  rating: number;
 }
 
 @Component({
@@ -35,6 +39,8 @@ export class AppComponent implements OnInit {
     const newQuiz: QuizDisplay = {
       name: "New Untitled Quiz"
       , questions: []
+      , testDate: ""
+      , quizDesc: ""
     };
 
     // Create a new quiz list with the new quiz...
@@ -53,7 +59,10 @@ export class AppComponent implements OnInit {
   addNewQuestion() {
     this.selectedQuiz.questions = [
       ...this.selectedQuiz.questions
-      , { name: "New Untitled Question" }
+      , { 
+        name: "New Untitled Question" 
+        , rating: 0 
+      }
     ];
   }
 
@@ -65,6 +74,33 @@ export class AppComponent implements OnInit {
     this.quizzes = this.quizzes.filter(x => x !== quizToDelete);
     this.selectedQuiz = undefined;
   }
+
+  serviceDown = false;
+
+  ngOnInit() {
+
+    this.qSvc.getQuizzes().subscribe(
+      (data) => {
+        console.log(data);
+
+        this.quizzes = (<any[]> data).map(x => ({ 
+          name: x.name
+          , numberOfQuestions: x.numberQuestions
+          , questions: x.questions.map( x => ({...x, rating:0}))
+          , testDate: ""
+          , quizDesc: ""
+        }));
+      }
+      , (error) => {
+        console.log(error);
+        this.serviceDown = true;
+      }
+    );
+  };
+
+
+
+
 
 
   promisesOne() {
@@ -123,25 +159,5 @@ export class AppComponent implements OnInit {
   }
 
 
-  serviceDown = false;
 
-  ngOnInit() {
-
-    this.qSvc.getQuizzes().subscribe(
-      (data) => {
-        console.log(data);
-
-        this.quizzes = (<any[]> data).map(x => ({ 
-          name: x.name
-          , numberOfQuestions: x.numberQuestions
-          , questions: x.questions
-        }));
-      }
-      , (error) => {
-        console.log(error);
-        this.serviceDown = true;
-      }
-    );
-
-  };
 }
