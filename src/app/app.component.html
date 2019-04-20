@@ -1,4 +1,5 @@
 <div class="container">
+  <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
   <div class="row" *ngIf="serviceDown">
     <div class="col-md-12">
       <div class="card mt-4">
@@ -9,7 +10,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>  
   <div class="row" *ngIf="!serviceDown">
     <div class="col-md-4">
       <button (click)="addNewQuiz()" class="btn btn-outline-primary mt-4">
@@ -18,7 +19,6 @@
       <button class="btn btn-sm btn-link mt-4" (click)="promisesOne()">JS Promise 1</button>
       <button class="btn btn-sm btn-link mt-4" (click)="promiseTwo()">2</button>
       <button class="btn btn-sm btn-link mt-4" (click)="promiseThree()">3</button>
-
       <div class="list-group mt-4">
         <a [class.active]="q === selectedQuiz" (click)="selectQuiz(q)" href="#" *ngFor="let q of quizzes"
           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">

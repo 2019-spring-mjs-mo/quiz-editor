@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from './quiz.service';
 
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+
 
 interface QuizDisplay {
   name: string
@@ -55,6 +58,8 @@ export class AppComponent implements OnInit {
 
     // Select the newly added quiz.
     this.selectedQuiz = newQuiz; 
+
+    this.changeSuccessMessage("A quiz has been sucessfully added!");
   }
 
   // Create new quiz question.
@@ -66,20 +71,33 @@ export class AppComponent implements OnInit {
         , rating: 0 
       }
     ];
+    this.changeSuccessMessage("A question has been sucessfully added!");
   }
 
   deleteQuestion(questionToDelete: QuestionDisplay) {
     this.selectedQuiz.questions = this.selectedQuiz.questions.filter(x => x !== questionToDelete);
+    this.changeSuccessMessage("The selected question has been deleted!");
   }
 
   deleteQuiz(quizToDelete: QuizDisplay) {
     this.quizzes = this.quizzes.filter(x => x !== quizToDelete);
     this.selectedQuiz = undefined;
+    this.changeSuccessMessage("The selected quiz has been deleted!");
+
   }
+
+
+  changeSuccessMessage(theMessage) {
+    this._success.next(theMessage);
+  }
+
 
   serviceDown = false;
   page = 1;
   pageSize = 5;
+  successMessage: string;  
+  staticAlertClosed = false;
+  private _success = new Subject<string>();
 
   ngOnInit() {
 
@@ -101,11 +119,15 @@ export class AppComponent implements OnInit {
         this.serviceDown = true;
       }
     );
+
+    setTimeout(() => this.staticAlertClosed = true, 20000);
+
+    this._success.subscribe((message) => this.successMessage = message);
+    this._success.pipe(
+      debounceTime(5000)
+    ).subscribe(() => this.successMessage = null);
+
   };
-
-
-
-
 
 
   promisesOne() {
