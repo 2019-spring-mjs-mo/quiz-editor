@@ -5,7 +5,8 @@ import { QuizService } from './quiz.service';
 interface QuizDisplay {
   name: string
   questions: QuestionDisplay[]
-  testDate: string
+  quizDate: string
+  quizTime: string
   quizDesc: string
 }
 
@@ -39,7 +40,8 @@ export class AppComponent implements OnInit {
     const newQuiz: QuizDisplay = {
       name: "New Untitled Quiz"
       , questions: []
-      , testDate: ""
+      , quizDate: ""
+      , quizTime: ""
       , quizDesc: ""
     };
 
@@ -76,6 +78,8 @@ export class AppComponent implements OnInit {
   }
 
   serviceDown = false;
+  page = 1;
+  pageSize = 5;
 
   ngOnInit() {
 
@@ -87,7 +91,8 @@ export class AppComponent implements OnInit {
           name: x.name
           , numberOfQuestions: x.numberQuestions
           , questions: x.questions.map( x => ({...x, rating:0}))
-          , testDate: ""
+          , quizDate: ""
+          , quizTime: ""
           , quizDesc: ""
         }));
       }
