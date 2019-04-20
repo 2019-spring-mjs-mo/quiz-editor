@@ -9,6 +9,7 @@ interface QuizDisplay {
   quizDate: string
   quizTime: string
   quizDesc: string
+  difficulty: number
 }
 
 interface QuestionDisplay {
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit {
       , quizDate: ""
       , quizTime: ""
       , quizDesc: ""
+      , difficulty: 0
     };
 
     // Create a new quiz list with the new quiz...
@@ -87,12 +89,31 @@ export class AppComponent implements OnInit {
     this._success.next(theMessage);
   }
 
+  averageDifficulty(passedQuiz){
+    const questionArray = passedQuiz.questions
+
+    this.totalRating = 0
+
+    for (var j = 0; j < questionArray.length; j++){
+      this.totalRating += questionArray[j].rating;
+    }
+
+    let averageRating = Math.round(10* (this.totalRating / questionArray.length)) /10
+   
+    return averageRating
+  }
+
+  
+
   serviceDown = false;
   page = 1;
   pageSize = 5;
   successMessage: string;  
   staticAlertClosed = false;
   private _success = new Subject<string>();
+  totalDifficulty = 0
+  totalRating = 0
+
 
   ngOnInit() {
 
@@ -107,6 +128,7 @@ export class AppComponent implements OnInit {
           , quizDate: ""
           , quizTime: ""
           , quizDesc: ""
+          , difficulty: 0
         }));
       }
       , (error) => {
