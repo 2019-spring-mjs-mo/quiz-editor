@@ -47,15 +47,13 @@
             <input type="text" [(ngModel)]="selectedQuiz.name" class="form-control">
           </ng-template>
         </ngb-panel>
-
         <ngb-panel title="Quiz Description">
           <ng-template ngbPanelContent>
-              <textarea [(ngModel)]="selectedQuiz.quizDesc" class="form-control" rows="3" placeholder="Enter Quiz Short Description"></textarea>
-            </ng-template>
+            <textarea [(ngModel)]="selectedQuiz.quizDesc" class="form-control" rows="3"
+              placeholder="Enter Quiz Short Description"></textarea>
+          </ng-template>
         </ngb-panel>
-
       </ngb-accordion>
-
       <div class="card mt-4">
         <div class="card-header">
           Questions
@@ -63,7 +61,8 @@
         <div class="card-body">
           <button (click)="addNewQuestion()" class="btn btn-outline-primary">Add New Question</button>
           <br /><br />
-          <div class="row" *ngFor="let q of selectedQuiz.questions | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+          <div class="row"
+            *ngFor="let q of selectedQuiz.questions | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
             <div class="col-md-12">Question #{{i+1}}</div>
             <div class="col-md-5">
               <input type="text" [(ngModel)]="q.name" class="form-control">
@@ -77,43 +76,31 @@
               <button class="btn btn-outline-danger" (click)="deleteQuestion(q)">Remove</button>
             </div>
           </div>
-
           <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="selectedQuiz.questions.length"></ngb-pagination>
-          
         </div>
       </div>
       <div class="card mt-4">
         <div class="card-header">
           Other
         </div>
-        
         <div class="card-body">
           <button class="btn btn-outline-danger" (click)="deleteQuiz(selectedQuiz)">Delete This Quiz</button>
-          <br /><br />  
+          <br /><br />
           <label>Quiz Date</label>
-            <div class="input-group">
-              <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="selectedQuiz.quizDate" ngbDatepicker #d="ngbDatepicker">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-              </div>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="selectedQuiz.quizDate"
+              ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
             </div>
-        
-            <label class="mt-4">Quiz Time</label>
-            <div class="input-group">
-              <div class="input-group-append">
-                  <ngb-timepicker [(ngModel)]="selectedQuiz.quizTime" [meridian]="meridian"></ngb-timepicker>
-              </div>
+          </div>
+          <label class="mt-4">Quiz Time</label>
+          <div class="input-group">
+            <div class="input-group-append">
+              <ngb-timepicker [(ngModel)]="selectedQuiz.quizTime" [meridian]="meridian"></ngb-timepicker>
             </div>
-      
-      
+          </div>
         </div>
-      
-      
-      
-      
-      
-      
-      
       </div>
     </div>
   </div>
