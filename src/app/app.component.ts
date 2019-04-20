@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from './quiz.service';
-
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-
 
 interface QuizDisplay {
   name: string
@@ -83,14 +81,11 @@ export class AppComponent implements OnInit {
     this.quizzes = this.quizzes.filter(x => x !== quizToDelete);
     this.selectedQuiz = undefined;
     this.changeSuccessMessage("The selected quiz has been deleted!");
-
   }
-
 
   changeSuccessMessage(theMessage) {
     this._success.next(theMessage);
   }
-
 
   serviceDown = false;
   page = 1;

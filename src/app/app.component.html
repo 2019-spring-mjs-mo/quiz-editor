@@ -63,20 +63,19 @@
           <br /><br />
           <div class="row"
             *ngFor="let q of selectedQuiz.questions | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-            <div class="col-md-12">Question #{{i+1}}</div>
-            <div class="col-md-5">
-              <input type="text" [(ngModel)]="q.name" class="form-control">
+            <div class="col-md-5 mt-2">
+              Question #{{i+1}}<br />
+              <input style="clear:both;" type="text" [(ngModel)]="q.name" class="form-control">
             </div>
-            <div class="col-md-4">
-              <ngb-rating [(rate)]="q.rating"></ngb-rating>
-              <hr>
-              <pre>Rate: <b>{{q.rating}}</b></pre>
+            <div class="col-md-5 mt-3">
+              Difficulty Rating<br />
+              <ngb-rating style="clear:both;" [(rate)]="q.rating"></ngb-rating> | {{q.rating}} out of 10
             </div>
-            <div class="col-md-3 mt-2">
+            <div class="col-md-2 mt-3">
               <button class="btn btn-outline-danger" (click)="deleteQuestion(q)">Remove</button>
             </div>
           </div>
-          <div *ngIf="selectedQuiz.questions.length > 0">
+          <div class="d-flex justify-content-center mt-4" *ngIf="selectedQuiz.questions.length > 0">
               <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="selectedQuiz.questions.length"></ngb-pagination>
           </div>
         </div>
