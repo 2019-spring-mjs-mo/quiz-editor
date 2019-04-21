@@ -109,6 +109,16 @@
         </div>
         <div class="card-body">
           <button class="btn btn-outline-danger">Delete This Quiz</button>
+          <br>
+          <br>
+          <div class="row">
+          <div class="col-md-9">
+          <input ngbDatepicker #d="ngbDatepicker" (focus)="d.open()">
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-link text-success">Choose</button>
+          </div>
+          </div>
         </div>
       </div>
     </div>
