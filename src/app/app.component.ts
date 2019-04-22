@@ -99,9 +99,12 @@ export class AppComponent implements OnInit {
 
   get numberOfEditedQuizzes() {
     return this.quizzes
-    .filter(
-      x => x.name !== x.originalName
-      || x.questionsCheckSum !== x.questions.map(x => x.name).join('~')
+    .filter(x => 
+      !x.markedForDelete &&
+      (
+        x.name !== x.originalName
+        || x.questionsCheckSum !== x.questions.map(x => x.name).join('~')
+      )
       ).length;
   }
 
