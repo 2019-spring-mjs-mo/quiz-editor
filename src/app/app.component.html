@@ -1,125 +1,125 @@
 <div class="container">
-  <div class="row" *ngIf="serviceDown">
-    <div class="col-md-12">
-      <br>
-      <div class="card">
-          <div class="card-body">
-            <h3>
-                Quiz service down. Please try again later. Sorry : - (
-            </h3>
-          </div>
-      </div>      
-    </div>
-  </div>
-  <div class="row" *ngIf="!serviceDown">
-    <div class="col-md-4">
-      <br>
-      <button 
-        (click)="addNewQuiz()"
-        class="btn btn-outline-primary"
-        >
-          Add New Quiz
-      </button>
-      <button class="btn btn-sm btn-link" (click)="promisesOne()">JS Promises 1</button>
-      <button class="btn btn-sm btn-link" (click)="promiseTwo()">2</button>
-      <button class="btn btn-sm btn-link" (click)="promiseThree()">3</button>
-      <br>
-      <br>
-      <div class="list-group">
-        <a
-          [class.active] = "q === selectedQuiz"
-          (click)="selectQuiz(q)" 
-          href="#"
-          *ngFor="let q of quizzes" 
-          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-          {{ q.name }}
-          <span 
-            class="badge badge-secondary"
-            [class.bg-danger]="q.questions.length === 0"
-          >
-            {{ q.questions.length }}
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class="col-md-8" *ngIf="!selectedQuiz">
-      <br>
-      <div class="card">
-        <div class="card-body">
-          Select or add a new quiz...
-        </div>
-      </div>
-    </div>
-    <div class="col-md-8" *ngIf="selectedQuiz">
-      <br>
-      <button class="btn btn-outline-success">Save</button>
-      <button class="btn btn-link">Cancel</button>
-      <br>
-      <br>
-      <div class="card">  
-        <div class="card-header">
-          General
-        </div>
-        <div class="card-body">
-          <input 
-            type="text" 
-            [(ngModel)]="selectedQuiz.name"
-            class="form-control">
-        </div>
-      </div>
-      <br>
-      <div class="card">
-        <div class="card-header">
-          Questions
-        </div>
-        <div class="card-body">
-          <button 
-            class="btn btn-outline-primary"
-            (click)="addNewQuestion()"
-          >
-            Add New Question
-          </button>
-          <br>
-          <br>
-          <div class="row" *ngFor="let question of selectedQuiz.questions">
-            <div class="col-md-9">
-              <input 
-                type="text" 
-                [(ngModel)]="question.name"
-                class="form-control"
-              />
+    <div class="row" *ngIf="serviceDown">
+      <div class="col-md-12">
+        <br>
+        <div class="card">
+            <div class="card-body">
+              <h3>
+                  Quiz service down. Please try again later. Sorry : - (
+              </h3>
             </div>
-            <div class="col-md-3">
-              <button 
-                class="btn btn-link text-danger"
-                (click)="removeQuestion(question)"
-              >
-                Remove
-              </button>
-            </div>
-            <br>
-            <br>
-          </div>
-        </div>
+        </div>      
       </div>
-      <br>
-      <div class="card">
-        <div class="card-header">
-          Other
-        </div>
-        <div class="card-body">
-          <div class="form check"></div>
-          <label class="form-check-label text-danger">
-            <input 
-            type="checkbox" 
-            class = "form-check-input"
-            [(ngmodel)]= "selectQuiz.markedForDelete"
+    </div>
+    <div class="row" *ngIf="!serviceDown">
+      <div class="col-md-4">
+        <br>
+        <button 
+          (click)="addNewQuiz()"
+          class="btn btn-outline-primary"
+          >
+            Add New Quiz
+        </button>
+        <button class="btn btn-sm btn-link" (click)="promisesOne()">JS Promises 1</button>
+        <button class="btn btn-sm btn-link" (click)="promiseTwo()">2</button>
+        <button class="btn btn-sm btn-link" (click)="promiseThree()">3</button>
+        <br>
+        <br>
+        <div class="list-group">
+          <a
+            [class.active] = "q === selectedQuiz"
+            (click)="selectQuiz(q)" 
+            href="#"
+            *ngFor="let q of quizzes" 
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            {{ q.name }}
+            <span 
+              class="badge badge-secondary"
+              [class.bg-danger]="q.questions.length === 0"
             >
-            Mark for Delete
-          </label>
+              {{ q.questions.length }}
+            </span>
+          </a>
         </div>
+      </div>
+      <div class="col-md-8" *ngIf="!selectedQuiz">
+        <br>
+        <div class="card">
+          <div class="card-body">
+            Select or add a new quiz...
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8" *ngIf="selectedQuiz">
+        <br>
+        <button class="btn btn-outline-success">Save</button>
+        <button class="btn btn-link">Cancel</button>
+        <br>
+        <br>
+        <div class="card">  
+          <div class="card-header">
+            General
+          </div>
+          <div class="card-body">
+            <input 
+              type="text" 
+              [(ngModel)]="selectedQuiz.name"
+              class="form-control">
+          </div>
+        </div>
+        <br>
+        <div class="card">
+          <div class="card-header">
+            Questions
+          </div>
+          <div class="card-body">
+            <button 
+              class="btn btn-outline-primary"
+              (click)="addNewQuestion()"
+            >
+              Add New Question
+            </button>
+            <br>
+            <br>
+            <div class="row" *ngFor="let question of selectedQuiz.questions">
+              <div class="col-md-9">
+                <input 
+                  type="text" 
+                  [(ngModel)]="question.name"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-3">
+                <button 
+                  class="btn btn-link text-danger"
+                  (click)="removeQuestion(question)"
+                >
+                  Remove
+                </button>
+              </div>
+              <br>
+              <br>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="card">
+          <div class="card-header">
+            Other
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+              <label class="form-check-label text-danger">
+                  <input 
+                    type="checkbox" 
+                    class="form-check-input" 
+                    [(ngModel)]="selectedQuiz.markedForDelete"
+                  >
+                  Mark for Delete
+                </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
