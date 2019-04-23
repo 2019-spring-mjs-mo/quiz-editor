@@ -107,6 +107,9 @@ export class AppComponent implements OnInit {
       ).length;
   }
 
+
+
+
   title = 'quiz-editor';
   myWidth = 250;
 
