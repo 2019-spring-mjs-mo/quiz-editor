@@ -96,13 +96,18 @@ export class AppComponent implements OnInit {
     });
   }
 
-  saveBatchEdis(){
+  saveBatchEdits(){
     const editedQuizzes = this.getEditedQuizzes().map(x=>({
       name:x.name
       ,originalName:x.name,
       questions:x.questions
     }));
-    const addedQuizzes = [];
+    const addedQuizzes = this.getAddedQuizzes().map(x=>({
+      quizName :x.name
+      ,quizQuestions:x.questions.map(x =>x.name)
+
+    }));
+    console.log(addedQuizzes);
     this.qSvc.saveQuizzes(editedQuizzes,addedQuizzes).subscribe(
       numberOdChnagedQuizzesSuccessfullySaved => console.log(numberOdChnagedQuizzesSuccessfullySaved)
       ,error => console.log(error)
@@ -113,7 +118,7 @@ export class AppComponent implements OnInit {
 
   cancelBatchEdits(){
     this.loadAllQuizzes();
-    this.selectedQuiz.name ==="";
+    this.selectedQuiz = undefined;
   }
 
   get numberOfDeletedQuizzes() {
@@ -135,7 +140,11 @@ export class AppComponent implements OnInit {
   }
 
   get numberOfAddedQuizzes() {
-    return this.quizzes.filter(x => !x.markedForDelete && x.originalName ==="Untitled Quiz").length;
+    return this.getAddedQuizzes().length;
+  }
+
+  getAddedQuizzes(){
+    return this.quizzes.filter(x => !x.markedForDelete && x.originalName ==="Untitled Quiz");
   }
 
   title = 'quiz-editor';
