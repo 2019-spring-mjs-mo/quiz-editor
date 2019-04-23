@@ -53,6 +53,12 @@
       <br>
       <button class="btn btn-outline-success">
         Save
+        <span
+          class="badge badge-success ml-1"
+          *ngIf="numberOfAddedQuizzes > 0"
+        >
+          + {{ numberOfAddedQuizzes }}
+        </span>
         <span 
           class="badge badge-danger ml-1"
           *ngIf="numberOfDeletedQuizzes > 0"
@@ -60,10 +66,10 @@
           - {{ numberOfDeletedQuizzes }}
         </span>
         <span
-        class="badge badge-default ml-1"
-        *ngIf="numberOfDeletedQuizzes > 0"
-      >
-        * {{ numberOfEditedQuizzes }}
+          class="badge badge-primary ml-1"
+          *ngIf="numberOfDeletedQuizzes > 0"
+        >
+          * {{ numberOfEditedQuizzes }}
         </span>
       </button>
       <button class="btn btn-link">Cancel</button>
