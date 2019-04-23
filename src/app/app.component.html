@@ -32,11 +32,11 @@
           href="#"
           *ngFor="let q of quizzes" 
           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-          [style.text-decoration]="q.markedForDelete ? 'line-through' : 'inherit' ">
+          [style.text-decoration]="q.markedForDelete ? 'line-through' : 'inherit'"
+        >
           {{ q.name }}
           <small>
-            {{ q.questions.length }}
-            questions
+            {{ q.questions.length }} questions
           </small>
         </a>
       </div>
@@ -51,9 +51,9 @@
     </div>
     <div class="col-md-8" *ngIf="selectedQuiz">
       <br>
-      <button class="btn btn-outline-success">
-        Save
-        <span
+      <button class="btn btn-outline-success" (click)="saveBatchEdits()">
+        Save Quizzes
+        <span 
           class="badge badge-success ml-1"
           *ngIf="numberOfAddedQuizzes > 0"
         >
@@ -65,14 +65,19 @@
         >
           - {{ numberOfDeletedQuizzes }}
         </span>
-        <span
-          class="badge badge-primary ml-1"
-          *ngIf="numberOfDeletedQuizzes > 0"
+        <span 
+          class="badge badge-light ml-1"
+          *ngIf="numberOfEditedQuizzes > 0"
         >
           * {{ numberOfEditedQuizzes }}
         </span>
       </button>
-      <button class="btn btn-link">Cancel</button>
+      <button 
+        class="btn btn-link"
+        (click)="cancelBatchEdits()"
+      >
+        Cancel
+      </button>
       <br>
       <br>
       <div class="card">  
@@ -128,15 +133,15 @@
         </div>
         <div class="card-body">
           <div class="form-check">
-              <label  class="form-check-label text-danger">
-                  <input 
-                      type="checkbox" 
-                      class="form-check-input" 
-                      [(ngModel)]="selectedQuiz.markedForDelete"
-                  >
-                  Mark for Delete
-                </label>
-          </div>      
+            <label class="form-check-label text-danger">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input" 
+                  [(ngModel)]="selectedQuiz.markedForDelete"
+                >
+                Mark for Delete
+              </label>
+          </div>
         </div>
       </div>
     </div>
