@@ -96,6 +96,21 @@ export class AppComponent implements OnInit {
     });
   }
 
+  saveBatchEdis(){
+    const editedQuizzes = this.getEditedQuizzes().map(x=>({
+      name:x.name
+      ,originalName:x.name,
+      questions:x.questions
+    }));
+    const addedQuizzes = [];
+    this.qSvc.saveQuizzes(editedQuizzes,addedQuizzes).subscribe(
+      numberOdChnagedQuizzesSuccessfullySaved => console.log(numberOdChnagedQuizzesSuccessfullySaved)
+      ,error => console.log(error)
+      
+
+    );
+  }
+
   cancelBatchEdits(){
     this.loadAllQuizzes();
     this.selectedQuiz.name ==="";
@@ -105,12 +120,18 @@ export class AppComponent implements OnInit {
     return this.quizzes.filter(x => x.markedForDelete).length;
   }
 
+  //propertty
   get numberOfEditedQuizzes() {
+    return this.getEditedQuizzes().length;
+  }
+
+  //Method
+  getEditedQuizzes(){
     return this.quizzes
       .filter(x =>
         (!x.markedForDelete && x.originalName !=="Untitled Quiz")
         && (x.name !== x.originalName || x.questionsChecksum !== x.questions.map(x => x.name).join('~'))
-      ).length;
+      );
   }
 
   get numberOfAddedQuizzes() {
