@@ -96,16 +96,44 @@ export class AppComponent implements OnInit {
   }
 
   get numberOfEditedQuizzes() {
+    return this.getEditedQuizzes.length;
+  }
+
+  getEditedQuizzes() {
     return this.quizzes
     .filter(x => 
       (!x.markedForDelete && x.originalName != "Untitled Quiz")
       &&
       (x.name !== x.originalName || x.questionsCheckSum !== x.questions.map(x => x.name).join('~'))
-      ).length;
+      );
   }
 
   get numberOfAddedQuizzes() {
-    return this.quizzes.filter(x => !x.markedForDelete && x.originalName === "Untitled Quiz").length;
+    return this.getAddedQuizzes.length;
+  }
+
+  getAddedQuizzes() {
+    return this.quizzes.filter(x => !x.markedForDelete && x.originalName === "Untitled Quiz");
+  }
+
+  saveBatchEdits() {
+    const editedQuizzes = this.getEditedQuizzes().map(x => ({
+      name: x.name
+      , originalName: x.name
+      , questions: x.questions
+    }));
+
+    const addedQuizzes = this.getAddedQuizzes().map(x => ({
+      quizName: x.name
+      , quizQuestions: x.questions
+    }));
+
+    console.log(addedQuizzes);
+
+    this.qSvc.saveQuizzes(editedQuizzes, addedQuizzes).subscribe(
+      numberOfChangedQuizzesSuccessfullySaved => console.log(numberOfChangedQuizzesSuccessfullySaved)
+      , error => console.log(error)
+    );
   }
 
   cancelBatchEdits() {
