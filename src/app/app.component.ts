@@ -7,8 +7,7 @@ interface QuizDisplay {
 
   questions: QuestionDisplay[];
   questionsChecksum: string;
-
-
+  
   markedForDelete: boolean;
 }
 
@@ -42,8 +41,8 @@ export class AppComponent implements OnInit {
       name: "Untitled Quiz"
       , originalName: "Untitled Quiz"
       , questions: []
+      , questionsChecksum: ""
       , markedForDelete: false
-      ,questionsChecksum: ""
     };
 
     // Create a new quiz list with the new quiz...
@@ -84,8 +83,8 @@ export class AppComponent implements OnInit {
           name: x.name
           , originalName: x.name
           , questions: x.questions
+          , questionsChecksum: x.questions.map(x => x.name).join('~')
           , markedForDelete: false
-          , questionsChecksum: x.questions.map().join("~")
         }));
       }
       , (error) => {
@@ -101,14 +100,17 @@ export class AppComponent implements OnInit {
   }
 
   get numberOfEditedQuizzes() {
-    return this.quizzes.filter(x => 
-      x.name !== x.originalName
-      ||x.questionsChecksum !== x.questions.map(x=> x.name).join("~")
+    return this.quizzes
+      .filter(x =>
+        (!x.markedForDelete && x.originalName != "Untitled Quiz")
+        && (x.name !== x.originalName || x.questionsChecksum !== x.questions.map(x => x.name).join('~'))
       ).length;
   }
 
 
-
+  get numberOfAddedQuizzes() {
+    return this.quizzes.filter(x => !x.markedForDelete && x.originalName === "Untitled Quiz").length;
+  }
 
   title = 'quiz-editor';
   myWidth = 250;
