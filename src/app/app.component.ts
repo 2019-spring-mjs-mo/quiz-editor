@@ -75,25 +75,31 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    this.qSvc.getQuizzes().subscribe(
-      (data) => {
-        console.log(data);
-
-        this.quizzes = (<any[]> data).map(x => ({ 
-          name: x.name
-          , originalName: x.name
-          , questions: x.questions
-          , questionsChecksum: x.questions.map(x => x.name).join('~')
-          , markedForDelete: false
-        }));
-      }
-      , (error) => {
-        console.log(error);
-        this.serviceDown = true;
-      }
-    );
+    this.loadAllQuizzes();
 
   };
+
+  //Load All Quizzes
+  private loadAllQuizzes() {
+    this.qSvc.getQuizzes().subscribe((data) => {
+      console.log(data);
+      this.quizzes = (<any[]>data).map(x => ({
+        name: x.name,
+        originalName: x.name,
+        questions: x.questions,
+        questionsChecksum: x.questions.map(x => x.name).join('~'),
+        markedForDelete: false
+      }));
+    }, (error) => {
+      console.log(error);
+      this.serviceDown = true;
+    });
+  }
+
+  cancelBatchEdits(){
+    this.loadAllQuizzes();
+    this.selectedQuiz.name ==="";
+  }
 
   get numberOfDeletedQuizzes() {
     return this.quizzes.filter(x => x.markedForDelete).length;
@@ -102,9 +108,13 @@ export class AppComponent implements OnInit {
   get numberOfEditedQuizzes() {
     return this.quizzes
       .filter(x =>
-        !x.markedForDelete 
+        (!x.markedForDelete && x.originalName !=="Untitled Quiz")
         && (x.name !== x.originalName || x.questionsChecksum !== x.questions.map(x => x.name).join('~'))
       ).length;
+  }
+
+  get numberOfAddedQuizzes() {
+    return this.quizzes.filter(x => !x.markedForDelete && x.originalName ==="Untitled Quiz").length;
   }
 
   title = 'quiz-editor';
