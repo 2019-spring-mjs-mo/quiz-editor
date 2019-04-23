@@ -7,7 +7,7 @@ interface QuizDisplay {
 
   questions: QuestionDisplay[];
   questionsChecksum: string;
-
+  
   markedForDelete: boolean;
 }
 
@@ -74,42 +74,45 @@ export class AppComponent implements OnInit {
   serviceDown = false;
 
   ngOnInit() {
+    this.loadAllQuizzes();
+  }
 
-    this.qSvc.getQuizzes().subscribe(
-      (data) => {
-        console.log(data);
+  private loadAllQuizzes() {
+    this.qSvc.getQuizzes().subscribe((data) => {
+      console.log(data);
+      this.quizzes = (<any[]>data).map(x => ({
+        name: x.name,
+        originalName: x.name,
+        questions: x.questions,
+        questionsChecksum: x.questions.map(x => x.name).join('~'),
+        markedForDelete: false
+      }));
+    }, (error) => {
+      console.log(error);
+      this.serviceDown = true;
+    });
+  }
 
-        this.quizzes = (<any[]> data).map(x => ({ 
-          name: x.name
-          , originalName: x.name
-          , questions: x.questions
-          , questionsChecksum: x.questions.map(x => x.name).join('~')
-          , markedForDelete: false
-        }));
-      }
-      , (error) => {
-        console.log(error);
-        this.serviceDown = true;
-      }
-    );
-
-  };
+  cancelBatchEdits() {
+    this.loadAllQuizzes();
+    this.selectQuiz(undefined);
+  }
 
   get numberOfDeletedQuizzes() {
     return this.quizzes.filter(x => x.markedForDelete).length;
   }
- 
+
   get numberOfEditedQuizzes() {
     return this.quizzes
-    .filter(x => 
-      !x.markedForDelete
-      && (x.name !== x.originalName || x.questionsChecksum !== x.questions.map(x => x.name).join('~'))
+      .filter(x =>
+        (!x.markedForDelete && x.originalName != "Untitled Quiz")
+        && (x.name !== x.originalName || x.questionsChecksum !== x.questions.map(x => x.name).join('~'))
       ).length;
   }
 
 
   get numberOfAddedQuizzes() {
-    return this.quizzes.filter(x => x.name === "Untitled Quiz").length;
+    return this.quizzes.filter(x => !x.markedForDelete && x.originalName === "Untitled Quiz").length;
   }
 
   title = 'quiz-editor';
