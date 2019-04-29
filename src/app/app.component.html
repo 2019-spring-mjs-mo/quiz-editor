@@ -28,6 +28,12 @@
       (click) = "promiseThree()">3</button>
       <br>
       <br>
+      <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample">
+    View Quizzes
+  </button>
+
+<div id="collapseExample" [ngbCollapse]="!isCollapsed">
       <div class="list-group">
         <a
           [class.active] = "q === selectedQuiz"
@@ -43,6 +49,7 @@
             {{ q.questions.length}}
           </span>
         </a>
+      </div>
       </div>
     </div>
     <div class="col-md-8" *ngIf="!selectedQuiz">
@@ -68,6 +75,23 @@
             type="text" 
             [(ngModel)]="selectedQuiz.name"
             class="form-control">
+            <form class="form-inline">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         name="dp" [(ngModel)]="model" ngbDatepicker [footerTemplate]="footerTemplate" #d="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">Date</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            
+            <ng-template #footerTemplate>
+              <hr class="my-0">
+              <button class="btn btn-primary btn-sm m-2 float-left" (click)="model = today; d.close()">Today</button>
+              <button class="btn btn-secondary btn-sm m-2 float-right" (click)="d.close()">Close</button>
+            </ng-template>
         </div>
       </div>
       <br>
@@ -85,31 +109,29 @@
           
           <br>
           <br>
-          <div class="row" *ngFor ="let question of selectedQuiz.questions">
-            <div class="col-md-9">
+          <div class="row" *ngFor ="let question of selectedQuiz.questions let i = index">
+            <div class="col-md-6">
               <input type="text" 
               [(ngModel)] ="question.name"
               class="form-control"
               >
               <br>
+             
             </div>
+            
             <div class="col-md-3">
               <button class="btn btn-link text-danger"
               (click) ="deleteQuestion(question)">Delete</button>
             </div>
           </div>
-          <!-- <div  *ngFor = "let q of  quizzes let i = index"> -->
-          <!-- <div class="input-group"   
-            *ngFor = "let question of  selectedQuiz.questions let i = index" >
-            <input type="text" 
-            [(ngModel)]="question.name"
-            class="form-control">
-           <div class="input-group-append">
-             <button  (click) ="deleteQuestion(i)" 
-              type="button" class="btn btn-outline-danger" >Delete</button>
-            </div> 
-        </div> -->
-      <!-- </div> -->
+          <ngb-pagination [collectionSize]="70" [(page)]="page" aria-label="Custom pagination">
+            <ng-template ngbPaginationPrevious>Prev</ng-template>
+            <ng-template ngbPaginationNext>Next</ng-template>
+            <ng-template ngbPaginationNumber let-p>{{ getPageSymbol(p) }}</ng-template>
+          </ngb-pagination>
+          <hr>
+        
+     
         </div>
       </div>
       <br>

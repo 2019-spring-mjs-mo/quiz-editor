@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from './quiz.service';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 interface QuizDisplay {
   name: string;
+
   // numberOfQuestions: number;
   questions:QuestionDisplay[];
 }
@@ -16,6 +18,7 @@ interface QuestionDisplay {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  calendar: any;
 
   constructor(private qSvc: QuizService) {
     // Use the quiz service here, but... If it fails, the creation
@@ -166,5 +169,19 @@ export class AppComponent implements OnInit {
 
   /* async */ testAsynch (){
     //await is a valid 
+  }
+
+  //Calendar
+
+  today =  Date.now();
+
+  public isCollapsed = false;
+
+  //Ng bootStrap
+
+  page = 3;
+
+  getPageSymbol(current: number) {
+    return ['1', '2', '3', '4', '5', '5', '6'][current - 1];
   }
 }

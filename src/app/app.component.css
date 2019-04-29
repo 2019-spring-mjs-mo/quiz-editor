@@ -1,0 +1,33 @@
+.star {
+      font-size: 1.5rem;
+      color: #b0c4de;
+    }
+    .filled {
+      color: rgb(238, 172, 6);
+    }
+    .bad {
+      color: #deb0b0;
+    }
+    .filled.bad {
+      color: #ff1e1e;
+    }
+
+    .custom-day {
+        text-align: center;
+        padding: 0.185rem 0.25rem;
+        border-radius: 0.25rem;
+        display: inline-block;
+        width: 2rem;
+      }
+      .custom-day:hover, .custom-day.focused {
+        background-color: #e6e6e6;
+      }
+      .weekend {
+        background-color: #f0ad4e;
+        border-radius: 1rem;
+        color: white;
+      }
+      .hidden {
+        display: none;
+      }
+  
