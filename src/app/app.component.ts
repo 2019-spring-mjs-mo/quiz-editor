@@ -34,7 +34,6 @@ export class AppComponent implements OnInit {
   }
 
 
-
   addNewQuiz() {
 
     // Create the new quiz.
@@ -183,17 +182,19 @@ export class AppComponent implements OnInit {
     }
 
 
-
-
-
   }
 
-  // async testAsyncKeyword() {
+//Collapse
+public isCollapsed = true;
 
-  // await is a valid varibale name
-  //   let await = 0;
-  // }
+//Pagination
+page = 1;
 
+  getPageSymbol(current: number) {
+    return [1, 2, 3, 4, 6, 7, 9][current - 1];
+  }
 
+  //DatePicker
+  model;
 
 }

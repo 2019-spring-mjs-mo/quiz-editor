@@ -76,6 +76,17 @@
             type="text" 
             [(ngModel)]="selectedQuiz.name"
             class="form-control">
+            <form class="form-inline">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary calendar" (click)="d.toggle()" type="button">Select Date</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
         </div>
       </div>
 
@@ -96,25 +107,42 @@
           </button>
           <br ><br >
           
-
-          <div class="row" *ngFor="let question of selectedQuiz.questions">
-
-            <div class="col-md-9">
-              <input 
-              type="text" 
-              [(ngModel)] = "question.name">
-            </div>
-
-            <div class="col-md-3">
-              <button 
-              class="btn btn-link text-danger"
-              (click) = "removeQuestion(question)"
-              >
-              remove
+          <p *ngIf="selectedQuiz.questions.length !== 0">
+            <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                    [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample">
+              Views Questions (Toggle)
             </button>
-            </div>
+          </p>
+          <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="card">
+              <div class="card-body">
+                <div class="row" *ngFor="let question of selectedQuiz.questions">
 
+                  <div class="col-md-9">
+                    <input 
+                    type="text" 
+                    [(ngModel)] = "question.name">
+                  </div>
+      
+                  <div class="col-md-3">
+                    <button 
+                    class="btn btn-link text-danger"
+                    (click) = "removeQuestion(question)"
+                    >
+                    remove
+                  </button>
+                  </div>
+                  
+                </div>
+                <ngb-pagination [collectionSize]="70" [(page)]="page" aria-label="Custom pagination">
+                    <ng-template ngbPaginationPrevious>Prev</ng-template>
+                    <ng-template ngbPaginationNext>Next</ng-template>
+                    <ng-template ngbPaginationNumber let-p>{{ getPageSymbol(p) }}</ng-template>
+                  </ngb-pagination>
+              </div>
+            </div>
           </div>
+          
         </div>
 
       </div>
@@ -125,6 +153,12 @@
         </div>
         <div class="card-body">
           <button class="btn btn-outline-danger">Delete This Quiz</button>
+
+          <!-- <p>
+            <ngb-alert type="custom" [dismissible]="false"><strong>Whoa!</strong> This is a custom alert.</ngb-alert>
+          </p> -->
+
+          
         </div>
       </div>
     </div>
