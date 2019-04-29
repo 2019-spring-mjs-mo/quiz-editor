@@ -49,7 +49,12 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8" *ngIf="selectedQuiz">
+    <div 
+    class="col-md-8" 
+    *ngIf="selectedQuiz"
+    [@detailsFromLeft] = "detailsAnimationState"
+    (@detailsFromLeft.done) = "detailsFromLeftAnimationComplete()"
+    >
       <br>
       <button 
         class="btn btn-outline-success"
