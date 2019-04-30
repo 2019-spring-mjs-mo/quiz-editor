@@ -56,12 +56,14 @@
       (@detailsFromLeft.done)="detailsFromLeftAnimationComplete()"
     >
       <br>
-      <button 
+    <div 
+      [@pulseSaveCancelButtons}="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes == > 0 ? 'somethingToSave' : 'nothingToSave'"
+    >
+        <button 
         class="btn"
         (click)="saveBatchEdits()"
         [class.btn-outline-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes == 0"
         [class.btn-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0"
-
       >
         Save Quizzes
         <span 
@@ -90,7 +92,7 @@
       >
         Cancel
       </button>
-      <br>
+    </div>
       <br>
       <div class="card">  
         <div class="card-header">
