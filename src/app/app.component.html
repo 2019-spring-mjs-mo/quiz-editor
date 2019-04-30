@@ -70,16 +70,19 @@
           Questions
         </div>
         <div class="card-body">
-          <button class="btn btn-outline-primary">Add New Question</button>
+          <button (click)="addNewQuestion()" class="btn btn-outline-secondary">Add New Question</button>
           <br>
           <br>
-          <div class="row" *ngFor="let question of selectedQuiz.questions">
+          <div *ngFor="let question of selectedQuiz.questions" class="row">
+            <br>
             <div class="col-md-9">
-              {{ question.name }}
+                <input type="text" class="form-control" [(ngModel)]="question.name">
             </div>
             <div class="col-md-3">
-              <button class="btn btn-link text-danger">Remove</button>
+                <button class="btn btn-link text-danger" (click)="removeQuestion(question)">Remove</button>
             </div>
+            <br>
+            <br>
           </div>
         </div>
       </div>
