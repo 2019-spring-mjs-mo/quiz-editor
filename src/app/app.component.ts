@@ -51,10 +51,10 @@ interface QuestionDisplay {
 })
 export class AppComponent implements OnInit {
 
-  detailsAnimationState = "leftPositon";
+  detailsAnimationState = "leftPosition";
 
   detailsFromLeftAnimationComplete() {
-    this.detailsAnimationState = "leftPositon";
+    this.detailsAnimationState = "leftPosition";
   }
 
   constructor(private qSvc: QuizService) {
