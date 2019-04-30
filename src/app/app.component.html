@@ -51,13 +51,16 @@
     </div>
     <div class="col-md-8" *ngIf="selectedQuiz">
       <br>
-      <button 
-        class="btn"
-        (click)="saveBatchEdits()"
-        [class.btn-outline-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes === 0"
-        [class.btn-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0"
-      >
+      <button class="btn btn-outline-success"
+      
+      (click) = saveBatchEdits()>
         Save Quizzes
+        <span 
+          class="badge badge-success ml-1"
+          *ngIf="numberOfAddedQuizzes > 0"
+        >
+          + {{ numberOfAddedQuizzes }}
+        </span>
         <span 
           class="badge badge-danger ml-1"
           *ngIf="numberOfDeletedQuizzes > 0"
@@ -77,12 +80,7 @@
           * {{ numberOfEditedQuizzes }}
         </span>
       </button>
-      <button 
-        class="btn btn-link"
-        (click)="cancelBatchEdits()"
-      >
-        Cancel
-      </button>
+      <button class="btn btn-link" (click) ="cancelBatchEdits()">Cancel</button>
       <br>
       <br>
       <div class="card">  
