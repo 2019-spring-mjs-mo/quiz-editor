@@ -56,40 +56,46 @@
       (@detailsFromLeft.done)="detailsFromLeftAnimationComplete()"
       >
       <br>
-      <button 
-        class="btn"
-        (click)="saveBatchEdits()"
-        [class.btn-outline-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes === 0"
-        [class.btn-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0"
+      <div
+        [@pulseSaveCancelButtons]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0 ? 'somethingToSave' : 'nothingToSave'"
+      
       >
-        Save Quizzes
-        <span 
-        class="badge badge-danger ml-1"
-        *ngIf="numberOfDeletedQuizzes > 0"
-      >
-        - {{ numberOfDeletedQuizzes }}
-      </span>
-        <span 
-          class="badge badge-success ml-1"
-          *ngIf="numberOfAddedQuizzes > 0"
+          <button 
+          class="btn"
+          (click)="saveBatchEdits()"
+          [class.btn-outline-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes === 0"
+          [class.btn-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0"
         >
-          + {{ numberOfAddedQuizzes }}
+          Save Quizzes
+          <span 
+          class="badge badge-danger ml-1"
+          *ngIf="numberOfDeletedQuizzes > 0"
+        >
+          - {{ numberOfDeletedQuizzes }}
         </span>
+          <span 
+            class="badge badge-success ml-1"
+            *ngIf="numberOfAddedQuizzes > 0"
+          >
+            + {{ numberOfAddedQuizzes }}
+          </span>
+  
+          <span 
+            class="badge badge-light ml-1"
+            *ngIf="numberOfEditedQuizzes > 0"
+          >
+            * {{ numberOfEditedQuizzes }}
+          </span>
+        </button>
+        <button 
+          class="btn btn-link"
+          (click)="cancelBatchEdits()"
+        >
+          Cancel
+        </button>
 
-        <span 
-          class="badge badge-light ml-1"
-          *ngIf="numberOfEditedQuizzes > 0"
-        >
-          * {{ numberOfEditedQuizzes }}
-        </span>
-      </button>
-      <button 
-        class="btn btn-link"
-        (click)="cancelBatchEdits()"
-      >
-        Cancel
-      </button>
-      <br>
+      </div>
+      
       <br>
       <div class="card">  
         <div class="card-header">
