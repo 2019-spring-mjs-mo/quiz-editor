@@ -58,13 +58,15 @@ export class AppComponent implements OnInit {
   }
 
   constructor(private qSvc: QuizService) {
-    // Use the quiz service here, but... If it fails, the creation
-    // of the component fails : - (
       this.detailsAnimationState = "leftPosition";
   }
 
   quizzes: QuizDisplay[] = [];
   selectedQuiz: QuizDisplay = undefined;
+
+  get numberOfDeletedQuizzes() {
+    return this.quizzes.filter(x => x.markedForDelete).length;
+  }
 
   selectQuiz(q: QuizDisplay) {
 
@@ -153,10 +155,6 @@ export class AppComponent implements OnInit {
   cancelBatchEdits() {
     this.loadAllQuizzes();
     this.selectQuiz(undefined);
-  }
-
-  get numberOfDeletedQuizzes() {
-    return this.quizzes.filter(x => x.markedForDelete).length;
   }
 
   get numberOfEditedQuizzes() {
