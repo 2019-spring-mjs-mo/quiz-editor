@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from './quiz.service';
 import { 
-  trigger
-  , animate
-  , style
-  , keyframes
+  trigger 
   , transition
+  , animate
+  , keyframes
+  , style
 } from '@angular/animations';
 
 interface QuizDisplay {
@@ -51,15 +51,16 @@ interface QuestionDisplay {
 })
 export class AppComponent implements OnInit {
 
-  detailsAnimationState = "leftPosition";
+  detailsAnimationState;
 
   detailsFromLeftAnimationComplete() {
-    this.detailsAnimationState = 'leftPosition';
+    this.detailsAnimationState = "leftPosition";
   }
 
   constructor(private qSvc: QuizService) {
     // Use the quiz service here, but... If it fails, the creation
     // of the component fails : - (
+      this.detailsAnimationState = "leftPosition";
   }
 
   quizzes: QuizDisplay[] = [];
@@ -90,7 +91,7 @@ export class AppComponent implements OnInit {
     ];
 
     // Select the newly added quiz.
-    this.selectQuiz(newQuiz); 
+    this.selectQuiz(newQuiz);
   }
 
   removeQuestion(questionToRemove) {
