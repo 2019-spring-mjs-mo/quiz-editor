@@ -8,6 +8,7 @@ import {
   , style
 } from '@angular/animations';
 
+
 interface QuizDisplay {
   name: string;
   originalName: string;
@@ -21,6 +22,7 @@ interface QuizDisplay {
 interface QuestionDisplay {
   name: string;
 }
+
 
 @Component({
   selector: 'app-root',
